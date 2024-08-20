@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="../dist/output.css" rel="stylesheet" />
+		<title>Tailwind Playground</title>
+	</head>
+	<body>
+		<div
+			style="
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-image: url(https://www.volvocars.com/images/v/-/media/applications/pdpspecificationpage/my24/s90-hybrid/pdp/s90-hybrid-hero-21x9-lwb.jpg?iar=0&w=1920&imdensity=1);
+			"
+			class="flex flex-col bg-pink-500 bg-opacity-25 items-center justify-center align-content-center h-lvh">
+			<div
+				class="flex flex-col border-2 border-gray-200 p-16 justify-center align-content-center gap-6 w-1/3 rounded-lg bg-white bg-opacity-[0.5] backdrop-blur-sm">
+				<div
+					class="w-1/2 h-20 bg-no-repeat bg-contain"
+					style="
+						background-image: url(https://www.volvocars.com/static/shared/images/volvo-spread-wordmark.svg);
+					"></div>
+				<div class="flex justify-between items-center gap-4">
+					<span>email</span>
+					<input
+						type="email"
+						placeholder="example@example.com"
+						class="border p-2 w-4/5" />
+				</div>
+				<div class="flex justify-between items-center gap-4">
+					<span>password</span>
+					<input
+						type="password"
+						placeholder="example"
+						class="border p-2 w-4/5" />
+				</div>
+				<div class="flex justify-between items-end">
+					<a href="#" class="text-blue-600 underline underline-offset-1"
+						>register</a
+					>
+					<div class="btn-primary">로그인</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
