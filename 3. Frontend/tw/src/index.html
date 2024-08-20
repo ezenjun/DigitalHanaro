@@ -3,9 +3,40 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="./output.css" rel="stylesheet" />
+		<link href="../dist/output.css" rel="stylesheet" />
+		<title>Tailwind Playground</title>
 	</head>
 	<body>
-		<h1 class="text-3xl font-bold underline">Hello world!</h1>
+		<div
+			class="container mx-auto py-5 min-w-full w-full p-5 h-lvh bg-no-repeat bg-cover bg-fixed"
+			style="
+				background-image: url(https://cdn.pixabay.com/photo/2024/05/24/19/06/bird-8785666_1280.jpg);
+			">
+			>
+			<h1
+				class="uppercase text-4xl text-white font-bold hover:text-red-600 hover:cursor-pointer">
+				스타벅스 50%라는 방아깐을 지나치지 못한 민석 참새
+			</h1>
+			<ul
+				class="border-white border-2 p-[1rem] mt-5 rounded-md mb-5 bg-[rgba(255, 255, 255, 0.88)] backdrop-blur-[9.8px]">
+				<li
+					class="text-white font-bold h-2/5 text-ellipsis text-break overflow-hidden line-clamp-4">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam,
+					veniam commodi minus sint maxime neque suscipit voluptas laudantium
+					amet possimus corporis animi, placeat, enim ab. Vero quas minus
+					corporis rerum.
+				</li>
+				<li class="text-pink-400">222</li>
+				<li class="text-grat-500 last:bg-blue-50">333</li>
+			</ul>
+			<div
+				class="flex border-2 bg-[rgba(255, 255, 255, 0.2)] border-white transition ease-in-out delay-150 p-5 rounded-md backdrop-blur-[9.8px]">
+				<button
+					href="#"
+					class="w-36 h-20 bg-green-300 hover:bg-green-800 transition-colors delay-50 ease-in-out rounded-md hover:scale-150">
+					Animation
+				</button>
+			</div>
+		</div>
 	</body>
 </html>

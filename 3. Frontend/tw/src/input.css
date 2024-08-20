@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-rrr {
+	color: red;
+}
+
+@layer utilities {
+	.text-rrr {
+		color: blue;
+	}
+}
+
+@layer components {
+	.btn {
+		@apply shrink-0 rounded-md px-5 py-2 font-semibold border border-spacing-1.5 shadow-md hover:bg-gray-100 hover:cursor-pointer;
+	}
+	.btn-primary {
+		@apply btn  bg-blue-600 hover:bg-blue-700 text-white focus:ring focus:ring-blue-400;
+	}
+	.btn-success {
+		@apply btn bg-green-400 hover:bg-green-500 text-white focus:ring focus:ring-green-500;
+	}
+	.btn-danger {
+		@apply btn  bg-red-400 hover:bg-red-500 text-white focus:ring focus:ring-red-500;
+	}
+
+	.input {
+		@apply px-3 py-2 mt-3 border rounded-md w-full focus:outline-none focus:ring-0 focus:border-slate-500;
+	}
+}
