@@ -61,81 +61,85 @@ this.name = 'ModuleName';
 // // const afn = new arrowFn('A'); // error!
 // // const afn =  arrowFn('A'); //{ name: 'A' } undefined A A
 
-// const Dog = function (name) {
-// 	if (!new.target) throw new Error('call constructor');
-// 	console.log(this, new.target, this instanceof Dog);
-// 	this.name = name;
-// 	this.bark = function () {
-// 		console.log('bark=', new.target, this.name, name);
-// 	};
-// 	this.bark2 = () => console.log('bark2=', new.target, this.name, name);
-// };
+const Dog = function (name) {
+	if (!new.target) throw new Error('call constructor');
+	console.log(this, new.target, this instanceof Dog);
+	this.name = name;
+	this.bark = function () {
+		console.log(this);
+		console.log('bark=', new.target, this, name);
+	};
+	this.bark2 = () => console.log('bark2=', this, this.name, name);
+};
 
-// // const dog = Dog('Doggy');
-// const lucy = new Dog('Lucy');
-// // Dog.bark(); // ?
-// // console.log(Dog); // -> function Object
-// // lucy.bark(); // ?
+// const dog = Dog('Doggy');
+const lucy = new Dog('Lucy');
+lucy.bark();
+lucy.bark2();
+// Dog.bark(); // ?
+// console.log(Dog); // -> function Object
+// lucy.bark(); // ?
 // // lucy.bark2(); // ?
 // console.log('type=', typeof dog); // ? Dog 내부에 return 하는게 없기 때문에 undefined
 // console.log('type=', typeof lucy); // ? 인스턴스 이기 때문에 object
 
-// 화살표 함수
-// this는 모듈
-// const Cat = (name) => {
-//     console.log('cat>>',this, new.target);
-//     this.name = name;
-//     this.bark = function () {
-//         console.log('bark=',typeof this)
-//         console.log('bark=', new.target, this.name, name);
-//     };
-//     this.bark2 = () =>
-//         console.log('bark2=', new.target, this.name, name);
-    
-//     return this; // 모듈
-// }
+// // 화살표 함수
+// // this는 모듈
+const Cat = (name) => {
+    console.log('cat>>',this, new.target);
+    this.name = name;
+    this.bark = function () {
+        // console.log('bark=',typeof this)
+        console.log('bark=', new.target, this, name);
+    };
+    this.bark2 = () =>
+      // console.log('bark=',typeof this)
+        console.log('bark2=', new.target, this, name);
 
-// const cat = Cat('Coco');
+    return this; // 모듈
+}
+
+const cat = Cat('Coco');
+console.log(cat.bark())
+// cat.bark(); // ?
+// cat.bark2()
 // console.log("🚀  Cat  Cat:", cat)
 //   // const cat = new Cat(''); // error!!
-// cat.bark(); // ?
+
 // cat.bark2(); // ?
 //   Cat.bark(); // ?
-//   console.log('type=', typeof cat); // ? 
+//   console.log('type=', typeof cat); // ?
 
+// const expressFn = function(name) {
+//     // if, 'use strict' ?
+//     console.log('11>>',this, new.target, this.name, name);
+//     this.name = name;
+//     console.log('22>>',this, new.target, this.name, name);
+// }
 
+// const arrowFn = (name) => {
+//     console.log('11>>',this, new.target, this.name, name);
+//     this.name = name;
+//     console.log('11>>',this, new.target, this.name, name);
+// }
 
-const expressFn = function(name) {
-    // if, 'use strict' ?
-    console.log('11>>',this, new.target, this.name, name);
-    this.name = name;
-    console.log('22>>',this, new.target, this.name, name);
-}
+// const hong = {id:1, name: 'Hong'}
+// const kim = {id:2, name: 'Kim'}
 
-const arrowFn = (name) => {
-    console.log('11>>',this, new.target, this.name, name);
-    this.name = name;
-    console.log('11>>',this, new.target, this.name, name);
-}
+// expressFn.bind(hong)('expfn');
+// // arrowFn.bind(hong)('expfn');
+// arrowFn.call(hong, 'afn')
+// arrowFn.apply(kim,['afn'])
 
+// globalThis.name = 'Global Name';
 
-const hong = {id:1, name: 'Hong'}
-const kim = {id:2, name: 'Kim'}
+// const obj = {
+//   name: 'Obj Name',
+//   printName() {
+//     console.log(this.name);
+//   },
+// };
 
-expressFn.bind(hong)('expfn');
-// arrowFn.bind(hong)('expfn');
-arrowFn.call(hong, 'afn')
-arrowFn.apply(kim,['afn'])
-
-globalThis.name = 'Global Name';
-
-const obj = {
-  name: 'Obj Name',
-  printName() {
-    console.log(this.name);
-  },
-};
-
-const printName = obj.printName;
-// obj.printName(); // printName.bind(obj)();
-printName();
+// const printName = obj.printName;
+// // obj.printName(); // printName.bind(obj)();
+// printName();

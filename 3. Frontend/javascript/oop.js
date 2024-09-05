@@ -53,7 +53,7 @@
 // }
 // const cat = new Cat('Happy');
 // console.log('static Cat>>', Cat.ID);
-const assert = require('assert');
+import assert from 'assert';
 
 class Emp {
 	constructor() {

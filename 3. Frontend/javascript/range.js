@@ -1,4 +1,4 @@
-const assert = require('assert');
+import assert from 'assert';
 
 const range = (s, e, step = s > e ? -1 : 1) => {
 	if (s === e || step === 0) return [s];

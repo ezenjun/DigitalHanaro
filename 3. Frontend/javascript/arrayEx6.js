@@ -1,4 +1,4 @@
-const assert = require('assert');
+import assert from 'assert';
 // 다음과 같은 정수 배열이 주어졌을 때, reduce를 이용하여, 각 요소를 다음의 순서로 처리하시오. (1회전으로 처리!)
 //  → 배열의 각 요소를 제곱   n => n ** 2            [square]
 //  → 배열 각 요소의 제곱근   n => Math.sqrt(n)      [sqrt]
@@ -23,7 +23,6 @@ const bJobs = [cube, square];
 
 const robot = (arr, jobs) =>
 	arr.map((a) => jobs.reduce((acc, job) => job(acc), a));
-
 
 assert.deepStrictEqual(robot(arr, aJobs), [1, 8, 27, 64, 125]);
 assert.deepStrictEqual(robot(arr, bJobs), [1, 64, 729, 4096, 15625]);
