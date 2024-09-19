@@ -1,12 +1,12 @@
-// const total = { price: 45000, vat: 4500 };
-// function fmt(texts, ...args) {
-// 	return `${texts[0]}${String(args[0].toLocaleString('ko-KR')).padStart(
-// 		8,
-// 		' '
-// 	)}${texts[1]}`;
-// }
-// console.log(fmt`주문합계: ${total.price}원`);
-// console.log(fmt`세액합계: ${total.vat}원`);
+const total = { price: 45000, vat: 4500 };
+function fmt(texts, ...args) {
+	return `${texts[0]}${String(args[0].toLocaleString("ko-KR")).padStart(
+		8,
+		" "
+	)}${texts[1]}`;
+}
+console.log(fmt`주문합계: ${total.price}원`);
+console.log(fmt`세액합계: ${total.vat}원`);
 
 // const isEndJaum2 = (word) => {
 // 	const letters = ['l', 'm', 'n', 'r'];
@@ -34,79 +34,79 @@
 // const 가 = '가'.charCodeAt();
 // const 자음알파벳숫자 = [...'LMNRlmnr136780'].map((a) => a.charCodeAt());
 
-const isEndJaum = (word) => {
-	const regex = /^[lnmrLMNR013678ㅏ-ㅣ]/;
-	const lastChar = word[word.length - 1];
-	var uni = lastChar.charCodeAt(0);
-	if (uni >= 44032 && uni <= 55203) {
-		return (uni - 44032) % 28 != 0;
-	}
-	if (!regex.test(lastChar)) return false;
-	return true;
-};
+// const isEndJaum = (word) => {
+// 	const regex = /^[lnmrLMNR013678ㅏ-ㅣ]/;
+// 	const lastChar = word[word.length - 1];
+// 	var uni = lastChar.charCodeAt(0);
+// 	if (uni >= 44032 && uni <= 55203) {
+// 		return (uni - 44032) % 28 != 0;
+// 	}
+// 	if (!regex.test(lastChar)) return false;
+// 	return true;
+// };
 
-const iga = (word) => {
-	// if (isEndJaum(word)) return `${word}이`;
-	// else return `${word}가`;
+// const iga = (word) => {
+// 	// if (isEndJaum(word)) return `${word}이`;
+// 	// else return `${word}가`;
 
-	return `${isEndJaum(word) ? '이' : '가'}`;
-};
+// 	return `${isEndJaum(word) ? '이' : '가'}`;
+// };
 
-const eunun = (word) => {
-	// if (isEndJaum(word)) return `${word}은`;
-	// else return `${word}는`;
+// const eunun = (word) => {
+// 	// if (isEndJaum(word)) return `${word}은`;
+// 	// else return `${word}는`;
 
-	return `${isEndJaum(word) ? '은' : '는'}`;
-};
+// 	return `${isEndJaum(word) ? '은' : '는'}`;
+// };
 
-const eulul = (word) => {
-	// if (isEndJaum(word)) return `${word}을`;
-	// else return `${word}를`;
+// const eulul = (word) => {
+// 	// if (isEndJaum(word)) return `${word}을`;
+// 	// else return `${word}를`;
 
-	return `${isEndJaum(word) ? '을' : '를'}`;
-};
+// 	return `${isEndJaum(word) ? '을' : '를'}`;
+// };
 
-console.log(iga('고성군'));
-console.log(eunun('고성군'));
-console.log(eulul('고성군'));
+// console.log(iga('고성군'));
+// console.log(eunun('고성군'));
+// console.log(eulul('고성군'));
 
-console.log(iga('강원도'));
-console.log(eunun('강원도'));
-console.log(eulul('강원도'));
+// console.log(iga('강원도'));
+// console.log(eunun('강원도'));
+// console.log(eulul('강원도'));
 
-import assert from 'assert';
-isEndJaum('강원도'); // false
-console.log("🚀  isEndJaum('강원도':", isEndJaum('강원도'));
-isEndJaum('바라당'); // true
-console.log("🚀  isEndJaum('바라당'):", isEndJaum('바라당'));
-isEndJaum('ㅜㅜ'); // false
-console.log("🚀  isEndJaum('ㅜㅜ'):", isEndJaum('ㅜㅜ'));
-isEndJaum('케잌'); // true
-console.log("🚀  isEndJaum('케잌'):", isEndJaum('케잌'));
-isEndJaum('점수 A'); // false lmnr   cf. isEndJaum('알파벳L')은 true
-console.log("🚀  isEndJaum('점수 A'):", isEndJaum('점수 A'));
-console.log("🚀  isEndJaum('점수 L'):", isEndJaum('점수 L'));
-// isEndJaum('24');
-console.log("🚀  isEndJaum('24'):", isEndJaum('23'));
-console.log("🚀  isEndJaum('24'):", isEndJaum('24'));
+// import assert from 'assert';
+// isEndJaum('강원도'); // false
+// console.log("🚀  isEndJaum('강원도':", isEndJaum('강원도'));
+// isEndJaum('바라당'); // true
+// console.log("🚀  isEndJaum('바라당'):", isEndJaum('바라당'));
+// isEndJaum('ㅜㅜ'); // false
+// console.log("🚀  isEndJaum('ㅜㅜ'):", isEndJaum('ㅜㅜ'));
+// isEndJaum('케잌'); // true
+// console.log("🚀  isEndJaum('케잌'):", isEndJaum('케잌'));
+// isEndJaum('점수 A'); // false lmnr   cf. isEndJaum('알파벳L')은 true
+// console.log("🚀  isEndJaum('점수 A'):", isEndJaum('점수 A'));
+// console.log("🚀  isEndJaum('점수 L'):", isEndJaum('점수 L'));
+// // isEndJaum('24');
+// console.log("🚀  isEndJaum('24'):", isEndJaum('23'));
+// console.log("🚀  isEndJaum('24'):", isEndJaum('24'));
 
-assert.strictEqual(`고성군${iga('고성군')}`, '고성군이');
-assert.strictEqual(`고성군${eunun('고성군')}`, '고성군은');
-assert.strictEqual(`고성군${eulul('고성군')}`, '고성군을');
-assert.strictEqual(`성동구${iga('성동구')}`, '성동구가');
-assert.strictEqual(`성동구${eunun('성동구')}`, '성동구는');
-assert.strictEqual(`성동구${eulul('성동구')}`, '성동구를');
-assert.equal(isEndJaum('아지오'), false);
-assert.equal(isEndJaum('북한강'), true);
-assert.equal(isEndJaum('뷁'), true);
-assert.equal(isEndJaum('강원도'), false);
-assert.equal(isEndJaum('바라당'), true);
-assert.equal(isEndJaum('ㅜㅏ'), false);
-assert.equal(isEndJaum('케잌'), true);
-assert.equal(isEndJaum('점수 A'), false);
-assert.equal(isEndJaum('알파벳L'), true);
-assert.equal(isEndJaum('24'), false);
-assert.equal(isEndJaum('23'), true);
+// assert.strictEqual(`고성군${iga('고성군')}`, '고성군이');
+// assert.strictEqual(`고성군${eunun('고성군')}`, '고성군은');
+// assert.strictEqual(`고성군${eulul('고성군')}`, '고성군을');
+// assert.strictEqual(`성동구${iga('성동구')}`, '성동구가');
+// assert.strictEqual(`성동구${eunun('성동구')}`, '성동구는');
+// assert.strictEqual(`성동구${eulul('성동구')}`, '성동구를');
+// assert.equal(isEndJaum('아지오'), false);
+// assert.equal(isEndJaum('북한강'), true);
+// assert.equal(isEndJaum('뷁'), true);
+// assert.equal(isEndJaum('강원도'), false);
+// assert.equal(isEndJaum('바라당'), true);
+// assert.equal(isEndJaum('ㅜㅏ'), false);
+// assert.equal(isEndJaum('케잌'), true);
+// assert.equal(isEndJaum('점수 A'), false);
+// assert.equal(isEndJaum('알파벳L'), true);
+// assert.equal(isEndJaum('24'), false);
+// assert.equal(isEndJaum('23'), true);
 
 // function searchByKoreanInitialSound(s, initials) {
 // 	// 초성을 정규식으로 변환하는 함수

@@ -1,4 +1,4 @@
-import assert, { rejects } from 'assert';
+import assert, { rejects } from "assert";
 
 const vals = [1, 2, 3];
 const randTime = (val) =>
@@ -99,26 +99,31 @@ const allSettled = (promises) => {
 		promises.forEach((promise, index) => {
 			promise
 				.then((value) => {
-					final[index] = { status: 'fulfilled', value: value };
+					final[index] = { status: "fulfilled", value: value };
 					if (end === promises.length) {
 						resolve(final);
 					}
 				})
 				.catch((err) => {
-					final[index] = { status: 'rejected', reason: err };
+					final[index] = { status: "rejected", reason: err };
+				})
+				.finally(() => {
+					end++;
+					if (end === promises.length) {
+						resolve(final);
+					}
 				});
-			end += 1;
 		});
 	});
 };
 
-Promise.race([randTime(1), Promise.reject('Error!'), randTime(2)])
-	.then(console.table)
-	.catch(console.error);
+// Promise.race([randTime(1), Promise.reject("Error!"), randTime(2)])
+// 	.then(console.table)
+// 	.catch(console.error);
 
-race([randTime(1), Promise.reject('Error!'), randTime(2)])
-	.then(console.table)
-	.catch(console.error);
+// race([randTime(1), Promise.reject("Error!"), randTime(2)])
+// 	.then(console.table)
+// 	.catch(console.error);
 
 // interface PromiseFulfilledResult<T> {
 // 	status: 'fulfilled';
@@ -160,17 +165,17 @@ race([randTime(1), Promise.reject('Error!'), randTime(2)])
 // 		console.log('reject!!!!!!>>', error);
 // 	});
 
-// allSettled([randTime(1), randTime(2), randTime(3)])
-// 	.then((arr) => {
-// 		console.table(arr);
-// 	})
-// 	.catch(console.error);
+Promise.allSettled([randTime(1), randTime(2), randTime(3)])
+	.then((arr) => {
+		console.table(arr);
+	})
+	.catch(console.error);
 
-// allSettled([randTime(1), randTime(2), randTime(3)])
-// 	.then((arr) => {
-// 		console.table(arr);
-// 	})
-// 	.catch(console.error);
+allSettled([randTime(1), randTime(2), randTime(3)])
+	.then((arr) => {
+		console.table(arr);
+	})
+	.catch(console.error);
 
 // promiseAllinOrder([randTime(11), Promise.reject('RRR'), randTime(33)])
 // 	.then((array) => {
