@@ -1,68 +1,71 @@
-:root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-	color-scheme: light dark;
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #242424;
-
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+#root {
+	padding: 0;
 }
-
-a {
-	font-weight: 500;
-	color: #646cff;
-	text-decoration: inherit;
-}
-a:hover {
-	color: #535bf2;
-}
-
-body {
-	margin: 0;
-	display: flex;
-	place-items: center;
-	min-width: 320px;
-	min-height: 100vh;
-}
-
-h1 {
-	font-size: 3.2em;
-	line-height: 1.1;
-}
-
-button {
-	border-radius: 8px;
-	border: 1px solid transparent;
-	padding: 0.6em 1.2em;
-	font-size: 1em;
-	font-weight: 500;
-	font-family: inherit;
-	background-color: #1a1a1a;
-	cursor: pointer;
-	transition: border-color 0.25s;
-}
-button:hover {
-	border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-	outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-	:root {
-		color: #213547;
-		background-color: #ffffff;
+@layer base {
+	body {
+		font-family: 'Pretendard', sans-serif;
 	}
-	a:hover {
-		color: #747bff;
-	}
+
 	button {
-		background-color: #f9f9f9;
+		padding: 0;
+		margin: 0;
 	}
+}
+
+@layer components {
+	/* header style start */
+	.header {
+		@apply flex max-h-12 items-center justify-between border-b-2 p-4;
+	}
+
+	.navItem {
+		@apply font-bold text-gray-500 hover:text-gray-800;
+	}
+	/* header style end */
+
+	/* mainContainer style start */
+	.mainContainer {
+		@apply flex h-full w-full gap-3 p-4;
+	}
+	.card {
+		@apply rounded-lg border border-gray-200 bg-white shadow;
+	}
+	.cardHover {
+		@apply hover:bg-white;
+	}
+	.buttonSmall {
+		@apply h-9 w-9 rounded-lg border border-gray-200 bg-white shadow hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-300;
+	}
+	.buttonMedium {
+		@apply rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 px-5 py-2.5 text-center font-semibold text-white hover:bg-gradient-to-bl focus:outline-none focus:ring-2 focus:ring-blue-300;
+	}
+	.input {
+		@apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500;
+	}
+	.inputLabel {
+		@apply mb-2 block text-gray-700;
+	}
+	.truncate {
+		@apply text-ellipsis text-nowrap;
+	}
+	.bookMarkTitle {
+		@apply mb-5 truncate text-center text-2xl font-bold;
+	}
+	.eachMark {
+		@apply flex w-full flex-row justify-between gap-2 bg-slate-50 p-2 text-lg;
+	}
+	.markInfo {
+		@apply flex flex-grow flex-col justify-between font-semibold;
+	}
+	/* mainContainer style end */
+
+	/* footer style start */
+	.footer {
+		@apply flex items-center justify-center border-t-2 p-1 text-slate-400;
+	}
+	/* footer style end */
 }
