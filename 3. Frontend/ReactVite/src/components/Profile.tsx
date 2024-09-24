@@ -1,20 +1,26 @@
-// src/components/Profile.tsx
-import { LoginUser } from '../App';
+import { forwardRef } from 'react';
+// import { Session } from '../App';
+import { useSession } from '../hooks/session-hook';
+// import Button from './atoms/Button';
 
-type Props = {
-	loginUser: LoginUser;
-	logout: () => void;
-};
+// type Props = {
+// 	session: Session;
+// 	logout: () => void;
+// };
 
-const Profile = ({ loginUser, logout }: Props) => {
+const Profile = forwardRef<HTMLButtonElement>((_, ref) => {
+	const { session, logOut } = useSession();
 	return (
-		<div className='card flex flex-col gap-2'>
-			<div>User Id: {loginUser.id}</div>
-			<div>User Name: {loginUser.name}</div>
-			<button onClick={logout} className='buttonMedium'>
-				Logout
+		<div>
+			<h3>{session.loginUser?.name} Logined</h3>
+			<button onClick={logOut} ref={ref} className='btn btn-primary'>
+				Profile Sign Out
 			</button>
+
+			{/* <Button onClick={logout} text='SignOut' className='btn btn-primary' /> */}
 		</div>
 	);
-};
+});
+
+Profile.displayName = 'Profile';
 export default Profile;

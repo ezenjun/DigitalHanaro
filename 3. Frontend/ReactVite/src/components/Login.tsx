@@ -1,43 +1,94 @@
-import { useState } from 'react';
+import {
+	FormEvent,
+	ForwardedRef,
+	forwardRef,
+	useImperativeHandle,
+	useRef,
+} from 'react';
+import Button from './atoms/Button';
+import LabelInput from './molecules/LabelInput';
+import { useSession } from '../hooks/session-hook';
 
-// src/components/Login.tsx
-type Props = {
-	login: (_id: number, _name: string) => void;
+export type LoginHandler = {
+	focusIdInput: () => void;
+	focusNameInput: () => void;
 };
 
-const Login = ({ login }: Props) => {
-	const [id, setId] = useState<number | ''>('');
-	const [name, setName] = useState('');
+// type Props = {
+// 	// session: Session;
+// 	// logout: () => void;
+// 	// login: (id: number, name: string) => void;
+// 	// addItem: (name: string, price: number) => void;
+// 	// removeCartItem: (id: number) => void;
+// 	ref: ForwardedRef<LoginHandler>;
+// };
 
-	const handleLogin = () => {
-		if (id && name) {
-			login(Number(id), String(name)); //실행
+function Login(_: unknown, ref: ForwardedRef<LoginHandler>) {
+	// const [id, setId] = useState(0);
+	// const [name, setName] = useState('');
+	const { login } = useSession();
+	const idRef = useRef<HTMLInputElement>(null);
+	const nameRef = useRef<HTMLInputElement>(null);
+	// state 사용 방식
+	// const signIn = (e: FormEvent<HTMLFormElement>) => {
+	// 	e.preventDefault();
+	// 	if (!id || !name) {
+	// 		alert('Input the id & name!!');
+	// 		return;
+	// 	}
+	// 	login(id, name);
+	// };
+
+	// ref 사용 방식
+	const signIn = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const id = idRef.current?.value;
+		const name = nameRef.current?.value;
+		if (!id) {
+			idRef.current?.focus();
+			return;
 		}
+		if (!name) {
+			nameRef.current?.focus();
+			return;
+		}
+		login(Number(idRef.current?.value), nameRef.current?.value ?? '');
 	};
+
+	useImperativeHandle(ref, () => ({
+		focusIdInput: () => idRef.current?.focus(),
+		focusNameInput: () => nameRef.current?.focus(),
+	}));
+
 	return (
-		<form onSubmit={handleLogin} className='flex flex-col gap-2'>
-			<div>
-				Login ID(숫자):{' '}
-				<input
+		<>
+			<form onSubmit={signIn} className='border p-4'>
+				<LabelInput
+					label='ID'
 					type='number'
-					value={id}
-					className='input text-black'
-					onChange={(e) => setId(e.target.value ? Number(e.target.value) : '')}
+					// onChange={(e) => setId(+e.currentTarget.value)}
+					ref={idRef}
 				/>
-			</div>
-			<div>
-				Login Name:{' '}
 				<input
+					id='name'
 					type='text'
-					value={name}
-					className='input'
-					onChange={(e) => setName(e.target.value)}
+					autoComplete='off'
+					placeholder='Name...'
+					className='inp'
+					// onChange={changeName}
+					ref={nameRef}
 				/>
-			</div>
-			<button type='submit' className='buttonMedium'>
-				Login
-			</button>
-		</form>
+
+				<Button
+					text='Sign In'
+					type='submit'
+					variant='btn-success'
+					classNames='float-end mt-3'
+				/>
+			</form>
+		</>
 	);
-};
-export default Login;
+}
+
+const ImpLogin = forwardRef(Login);
+export default ImpLogin;

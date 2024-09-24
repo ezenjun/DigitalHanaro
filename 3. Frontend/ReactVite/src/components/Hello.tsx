@@ -1,4 +1,10 @@
-import { ReactNode, useState } from 'react';
+import {
+	ForwardedRef,
+	forwardRef,
+	ReactNode,
+	useImperativeHandle,
+	useState,
+} from 'react';
 
 type TitleProps = {
 	text: string;
@@ -8,7 +14,7 @@ type TitleProps = {
 const Title = ({ text, name }: TitleProps) => {
 	// console.log('Titttttttttttttt!!');
 	return (
-		<h1>
+		<h1 className='text-3xl'>
 			{text} {name}
 		</h1>
 	);
@@ -16,8 +22,27 @@ const Title = ({ text, name }: TitleProps) => {
 
 const Body = ({ children }: { children: ReactNode }) => {
 	// console.log('bodddddddd!!!');
-	return <div className='flex'>{children}</div>;
+	return (
+		<div className='red' style={{ color: 'blue' }}>
+			{children}
+		</div>
+	);
 };
+
+// function useState<S>(initValueOrFn) {
+//   const state = {
+//     _state: initValueOrFn,
+//     get state() {
+//       return this._state;
+//     },
+//     setState(x: S) {
+//       this._state = x;
+//       vdom.trigger(this);
+//     }
+//   }
+
+//   return [state.state, state.setState];
+// }
 
 type Props = {
 	name: string;
@@ -27,41 +52,52 @@ type Props = {
 	minusCount: () => void;
 };
 
-export default function Hello({
-	name,
-	age,
-	count,
-	plusCount,
-	minusCount,
-}: Props) {
+export type MyHandler = {
+	jumpHelloState: () => void;
+};
+
+function Hello(
+	{ name, age, count, plusCount, minusCount }: Props,
+	ref: ForwardedRef<MyHandler>
+) {
 	// const [myState, setMyState] = useState(() => new Date().getTime());
-	const [myState, setMyState] = useState(0);
+	const [myState, setMyState] = useState(1);
 	let v = 1;
-	console.debug('********', v, myState, count);
+	// console.debug('********', v, myState, count);
+
+	const handler: MyHandler = {
+		jumpHelloState: () => setMyState((pre) => pre * 10),
+	};
+	useImperativeHandle(ref, () => handler);
 
 	return (
-		<div className='card flex flex-col items-center gap-6 border p-4'>
-			<Title text='Hi~' name={name} />
+		<div className='my-5 border border-slate-300 p-3'>
+			<Title text='Hello~' name={name} />
 			<Body>
-				This is Hello Body Component. {v} - {myState} - {age}
+				<h3 className='text-center text-2xl'>myState: {myState}</h3>
+				This is Hello Body Component. {v} - {age}
 			</Body>
-			<div className='flex gap-6'>
-				<button
-					className='buttonMedium'
-					onClick={() => {
-						v++;
-						setMyState(myState + 1);
-						plusCount();
-						// console.log('v/myState=', v, myState);
-					}}
-				>
-					Hello
-				</button>
-				<strong>{count}</strong>
-				<button className='buttonMedium' onClick={() => minusCount()}>
-					Minus
-				</button>
-			</div>
+			<button
+				onClick={() => {
+					v++;
+					setMyState(myState + 1);
+					plusCount();
+					// console.log('v/myState=', v, myState);
+				}}
+				className='btn'
+			>
+				Hello(+)
+			</button>
+			<strong id='cnt' className='mx-5'>
+				{count}
+			</strong>
+			<button onClick={() => minusCount()} className='btn btn-danger'>
+				Minus
+			</button>
 		</div>
 	);
 }
+
+const ImpHello = forwardRef(Hello);
+
+export default ImpHello;

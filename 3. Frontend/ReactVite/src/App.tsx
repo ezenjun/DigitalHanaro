@@ -1,51 +1,65 @@
-import { useState } from 'react';
-import './App.css';
-import Hello from './components/Hello';
+import { useRef } from 'react';
+import Hello, { MyHandler } from './components/Hello';
 import My from './components/My';
+import { type LoginHandler } from './components/Login';
+import { useCounter } from './hooks/counter-hook';
+import { SessionProvider, useSession } from './hooks/session-hook';
 
-const SampleSession = {
-	loginUser: { id: 1, name: 'Hong' },
-	cart: [
-		{ id: 100, name: '라면', price: 3000 },
-		{ id: 101, name: '컵라면', price: 2000 },
-		{ id: 200, name: '파', price: 5000 },
-	],
-};
-
-export type LoginUser = typeof SampleSession.loginUser;
+// const SampleSession = {
+// 	loginUser: { id: 1, name: 'Hong' },
+// 	cart: [
+// 		{ id: 100, name: '라면', price: 3000 },
+// 		{ id: 101, name: '컵라면', price: 2000 },
+// 		{ id: 200, name: '파', price: 5000 },
+// 	],
+// };
 type CartItem = { id: number; name: string; price: number };
+type LoginUser = Omit<CartItem, 'price'>;
 export type Session = { loginUser: LoginUser | null; cart: CartItem[] };
 
 function App() {
-	const [count, setCount] = useState(0);
-	const [session, setSession] = useState<Session>(SampleSession);
+	const { count, plusCount, minusCount } = useCounter();
+	const { session } = useSession();
 
-	const plusCount = () => setCount(count + 1);
-	const minusCount = () => setCount(count - 1);
-
-	const login = (id: number, name: string) =>
-		setSession({ ...session, loginUser: { id, name } });
-	const logout = () => setSession({ ...session, loginUser: null });
+	const myHandleRef = useRef<MyHandler>(null);
+	const loginRef = useRef<LoginHandler>(null);
 
 	return (
-		<div className='flex h-screen w-screen items-center justify-center bg-slate-400'>
-			<div className='card min-h-4/5 flex flex-col gap-4'>
-				<Hello
-					name='홍길동'
-					age={33}
-					count={count}
-					plusCount={plusCount}
-					minusCount={minusCount}
+		<div className='mt-5 flex flex-col items-center'>
+			<Hello
+				name='홍길동'
+				age={33}
+				count={count}
+				plusCount={plusCount}
+				minusCount={minusCount}
+				ref={myHandleRef}
+			/>
+			<hr />
+			<pre>{JSON.stringify(session.loginUser)}</pre>
+			<SessionProvider>
+				<My
+					// session={session}
+					// logout={logOut}
+					// login={login}
+					// addItem={addCartItem}
+					// removeCartItem={removeCartItem}
+					ref={loginRef}
 				/>
-				<My session={session} login={login} logout={logout} />
-				<div className='flex justify-center'>
-					<button
-						onClick={() => setCount((count) => count + 1)}
-						className='buttonMedium'
-					>
-						App.count is {count}
-					</button>
-				</div>
+			</SessionProvider>
+
+			<div className='card'>
+				<button
+					onClick={() => {
+						// setCount((count) => count + 1);
+						plusCount();
+						if (session.loginUser) session.loginUser.name = 'XXX' + count;
+						console.table(session.loginUser);
+						myHandleRef.current?.jumpHelloState();
+					}}
+					className='btn'
+				>
+					App.count is {count}
+				</button>
 			</div>
 		</div>
 	);
