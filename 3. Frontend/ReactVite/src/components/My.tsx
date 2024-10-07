@@ -1,77 +1,72 @@
-import { forwardRef, useRef, useState } from 'react';
-// import { Session } from '../App.tsx';
-import Button from './atoms/Button.tsx';
 import Login from './Login.tsx';
 import Profile from './Profile.tsx';
-import { HiOutlineTrash } from 'react-icons/hi';
-import AddNewItem from './AddNewItem.tsx';
-import { useSession } from '../hooks/session-hook.tsx';
+import Button from './atoms/Button.tsx';
+import { useEffect, useRef } from 'react';
+import { useSession } from '../hooks/session-context.tsx';
+import { useTimeout } from '../hooks/timer-hooks.ts';
+import clsx from 'clsx';
 
-// type Props = {
-// 	// session: Session;
-// 	// logout: () => void;
-// 	// login: (id: number, name: string) => void;
-// 	// addItem: (name: string, price: number) => void;
-// 	// removeCartItem: (id: number) => void;
-// 	ref: ForwardedRef<LoginHandler>;
-// };
+export default function My() {
+  const { session, toggleReloadSession } = useSession();
+  const logoutButtonRef = useRef<HTMLButtonElement>(null);
 
-function My() {
-	const { session, removeCartItem } = useSession();
-	const logoutButtonRef = useRef<HTMLButtonElement>(null);
-	const removeItem = (id: number) => {
-		if (confirm('Are you sure?')) {
-			removeCartItem(id);
-		}
-	};
-	const [addNewItem, setAddNewItem] = useState<boolean>(false);
-	const closeNewItem = () => {
-		setAddNewItem(!addNewItem);
-	};
+  let xxx = 0;
+  // useEffect(() => {
+  //   console.log('*******22');
+  //   // alert('login plz...');
 
-	console.log(session.cart);
+  //   return () => console.log('unmount22!!');
+  // }, []);
+  useTimeout(() => {
+    xxx++;
+  }, 1000);
 
-	return (
-		<>
-			{session.loginUser ? (
-				<>
-					<Profile ref={logoutButtonRef} />
-					<Button
-						onClick={() => logoutButtonRef.current?.focus()}
-						text='My SignOut'
-						className='btn btn-primary'
-					/>
-				</>
-			) : (
-				<Login />
-			)}
-			<ul className='my-3 flex flex-col items-center border p-3'>
-				{session.cart?.length ? (
-					session.cart?.map(({ id, name, price }) => (
-						<li key={id} className='mb-4 flex w-full justify-between'>
-							<span>{name}</span>
-							<div className='flex gap-4'>
-								<small>({price.toLocaleString()})</small>
-								<HiOutlineTrash
-									onClick={() => removeItem(id)}
-									className='hover:cursor-pointer'
-								/>
-							</div>
-						</li>
-					))
-				) : (
-					<li className='text-gray-400'>Cart is Empty</li>
-				)}
-				{addNewItem && <AddNewItem closeNewItem={closeNewItem}></AddNewItem>}
-				<Button
-					text='새로운 아이템 추가하기'
-					className='btn btn-primary m-4'
-					onClick={() => setAddNewItem(!addNewItem)}
-				></Button>
-			</ul>
-		</>
-	);
+  useEffect(() => {
+    // const abortController = new AbortController();
+    // const { signal } = abortController;
+    // (async function () {
+    //   try {
+    //     const data = await fetch('/data/sample.json', { signal }).then((res) =>
+    //       res.json()
+    //     );
+    //     console.log('My.data>>', data);
+    //   } catch (error) {
+    //     console.error('Error>>', error);
+    //   }
+    // })();
+    // fetch('/data/sample.json', { signal })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data>>', data);
+    //   })
+    //   .catch((error) => console.error('Error>>', error));
+    // return () => abortController.abort('Clean-up in My!');
+  }, []);
+
+  return (
+    <>
+      <div
+        className={clsx(
+          !session.loginUser && 'border-2 border-red-500',
+          'rounded-md'
+        )}
+      >
+        {session.loginUser ? (
+          <div className='flex gap-5'>
+            <Profile ref={logoutButtonRef} xxx={xxx} />
+            <Button
+              onClick={() => logoutButtonRef.current?.focus()}
+              classNames='h-full'
+            >
+              MySignOut
+            </Button>
+          </div>
+        ) : (
+          <Login />
+        )}
+      </div>
+
+      <Button onClick={toggleReloadSession}>Reload Session</Button>
+    </>
+  );
 }
-
-const ImpMy = forwardRef(My);
-export default ImpMy;
